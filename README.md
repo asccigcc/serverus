@@ -113,3 +113,9 @@ func main() {
 	server.StartServerus()
 }
 ```
+
+## License
+[MIT License](https://github.com/asccigcc/serverus/LICENSE.md) Copyright (c) 2021 Pastorinni Ochoa
+
+## Contribution
+PR(s) are Open and Welcomed.
