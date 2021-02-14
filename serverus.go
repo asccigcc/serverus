@@ -48,13 +48,12 @@ func (s *Serverus) InitGRPC() {
 	)
 }
 
-type RegisterHandler interface {
-	RegisterHandlerServer(s grpc.ServiceRegistrar) bool
-}
+type registerServer func(s grpc.ServiceRegistrar)
 
 // Register the Protobuf server handler
-func (s *Serverus) RegisterHandler(handler RegisterHandler) {
-	handler.RegisterHandlerServer(s.server)
+func (s *Serverus) RegisterServer(fn registerServer) {
+	log.Println("Resgitering Server")
+	fn(s.server)
 }
 
 // Start the gRPC server
@@ -65,7 +64,7 @@ func (s *Serverus) StartServerus() {
 }
 
 // Initialize new gRPC serverus server
-func NewServerus(port string, interceptors ...grpc.UnaryServerInterceptor) *Serverus {
+func NewServerus(port string) *Serverus {
 	port = getPort(port)
 
 	log.Println("Creating new serverus")
@@ -85,7 +84,6 @@ func getListener(port string) net.Listener {
 	return lis
 }
 
-// @TODO move to helpers
 func getPort(port string) string {
 	if len(port) > 0 {
 		return port
